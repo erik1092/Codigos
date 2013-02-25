@@ -1,0 +1,32 @@
+/**
+  @file cola.h
+  @brief Defines y Prototipos para el manejo de colas.
+
+  @author Erik Navarro
+  @date 02/2013
+
+*/
+#ifndef _COLA_H
+#define _COLA_H
+
+/** Estructura para el manejo de Colas */
+struct List {
+	/** Cantidad de elementos que tiene la cola*/
+	int count;
+	/** Apuntador al primer nodo de la cola */
+	struct Node *first;
+};
+
+//Prototipos
+//Funciones Generales
+struct List * init_list();
+int destroy_list(struct List *lista);
+void print_list(struct List *lista);
+
+//Funciones propias de las Colas
+
+int insert_last(struct List *lista, int value); 
+int remove_first(struct List *lista);
+struct Node * get_last_node(struct List *list);
+struct Node * get_first_node(struct List *list);
+#endif

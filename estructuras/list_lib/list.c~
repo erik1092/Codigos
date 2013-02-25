@@ -1,0 +1,151 @@
+/**
+   @file list.c
+   @brief Codigo para el manejo de Listas
+
+   @autor Erik Navarro 
+   @date 02/2013
+*/
+
+#include "../config.h"
+#include "../debug.h"
+
+#include "list.h"
+#include "node.h"
+
+#include <stdlib.h>
+#include <stdbool.h>
+
+
+struct List * init_list() {
+	struct List *lista;
+
+	lista = (struct List *) calloc(1,sizeof(struct List));
+	if(lista == NULL){
+		log_err("%s", "Can't allocate memory");
+		return NULL;
+	}
+
+	log_debug("Lista construida en la direccion %p",lista);
+
+	lista->count = 0;
+	lista->first = NULL;
+
+	return lista;
+}
+
+int destroy_list(struct List *lista) {
+
+	struct Node *nodo;
+	struct Node *nodo_to_drop;
+
+     if(lista->count > 0 || lista->first != NULL{
+		nodo = lista->first;
+		while(nodo->next != NULL){
+			nodo_to_drop = nodo;
+			nodo = nodo->next;
+			destroy_nodo(nodo_to_drop);
+		}
+
+		destroy_nodo(nodo);
+     }
+
+	log_debug("Lista en la direccion %p destruida", lista);
+	free(lista);
+	return true;
+}
+
+int add(struct List *lista, int value) {
+
+	struct Node *nodo;
+	struct Node *centinela;
+
+	int count = 0;
+	
+	if(lista == NULL) {
+		log_warn("%s", "Try to add node to NULL list");
+		return -1;
+	}
+
+	nodo = new_node(value);
+	if(nodo == NULL) {
+		log_warn("%s", "Can't create node");
+		return -1;
+	}
+
+// Evaluamos si la lista contiene nodos
+	if(lista->count == 0) {
+		log_debug("Nodo %i agregado al principio de la lista",
+value);
+		lista->first = nodo;
+		lista->count = 1;
+		return 0;
+	}
+	
+	if(lista->first == NULL) {
+		log_err("Lista dice contener %i nodos pero sus nodos estan perdidos", lista->count);
+		log_debug("Nodo %i agregado al principio de la lista",
+value);
+		lista->first = nodo;
+		lista->count = 1;
+		return 0;
+	}
+
+	//La lista no esta vacia por lo tanto recorremos la lista.
+	centinela = lista->first;
+	count = 1;
+	while(centinela->next != NULL) {
+		centinela = centinela->next;
+		count++;
+	}
+	if(count != lista->count) {
+		log_err("La lista dice tener %i nodos pero se encontraron %i nodos" , lista->count, count);
+	}
+
+	log_debug("Nodo %i agregado en la posicion %i de la lista", value,count+1);
+	centinela->next = nodo;
+	lista->count = count+1;
+
+	return count;
+}
+
+void print_list(struct List *lista) {
+	struct Node *nodo;
+	int count = 0;
+
+	if(list == NULL) {
+		log_warn("%s", "Try to print NULL list");
+		return;
+	}
+
+	nodo = lista->first;
+	do {
+		print("%s", "Try to print NULL list");
+		return;
+	}
+	
+	nodo = lista->first;
+	do {
+		printf("[%i]\t%i\n",count,nodo->value);
+		nodo = nodo->next;
+		count++;
+	} while(nodo != NULL);
+	
+	return;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

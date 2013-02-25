@@ -1,0 +1,41 @@
+/**
+  @file list.h
+  @brief Defines y Prototipos para el manejo de Nodos.
+
+  @author Alvaro Parres
+  @date 01/2013
+
+*/
+#ifndef _NODE_H
+#define _NODE_H
+
+/** Estructura para el manejo de Nodos */
+struct Node {
+	/** Valor del nodo */
+	int value;
+	/** Apuntador al nodo siguiente */
+	struct Node *next;
+};
+
+//Prototipos
+
+/**
+   @brief Crea una nueva nodo.
+
+   @param value Valor que contendra el nodo
+   @param *next Apuntador al siguiente nodo. Default: NULL
+ 
+   @returns Regresa un apuntador hacia el nuevo nodo, regresa NULL en caso de error.
+*/
+struct Node * new_node(int value, struct Node *next=NULL);
+
+/**
+   @brief Destruye un nodo.
+
+   @param *nodo Apuntador al nodo a eliminar.
+ 
+   @returns Regresa el valor del nodo eliminado o -1 en caso de error.
+*/
+
+int destroy_nodo(struct Node *nodo);
+#endif
